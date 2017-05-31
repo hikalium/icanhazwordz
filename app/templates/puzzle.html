@@ -1,0 +1,61 @@
+<table border=2>
+  <td width=50% valign=top style="padding: 10px 10px 10px 10px;">
+    {{if not .Game.Over}}
+    <table border=0>
+      {{range Board .Game}}
+      <tr>{{range .}}
+        <td valign=middle align=center><div onClick="document.getElementById('MoveField').value+='{{Denorm .}}';" class="letter p{{Points .}}">{{Denorm .}}</div></td>
+        {{end}}
+      </tr>
+      {{end}}
+    </table>
+    <form method=post>
+      {{block "GameInputs" .Game}}
+      <input type=hidden name=Seed value="{{.Seed}}" />
+      <input type=hidden name=Started value="{{Unix .Started}}" />
+      {{range .Moves}}
+      <input type=hidden name=Moves value="{{.}}"/>
+      {{end}}
+      {{end}}
+      <input id=MoveField type=text size=16 maxlength=16 name=move autofocus tabindex=1 />
+      <input type=reset tabindex=4 style="border: none;"/>
+      <br/>
+      <input type=submit tabindex=2 value="Submit" />
+      <input type=submit tabindex=3 name=pass value="PASS" style="color: red;"/>
+    </form>
+  </td>
+  {{else}}<p>
+    {{if gt (ScoreGame .Game) 0}}
+    You Win!
+  <p>Congratulations on your new <a href="/highscores">high score</a>!!</p>
+  <form action="/highscores" method=post>
+    {{template "GameInputs" .Game}}
+    <table>
+      <tr><td align=right>Nickame (宛名)</td><td><input type=text name="NickName"/></td></tr>
+      <tr><td align=right>GitHub URL</td><td><input type=text name="URL"/></td></tr>
+      <tr><td align=right>Playing as human?</td><td align=left style="padding-left: 10px;">{{AgentMoji "Human"}}<input type=radio name=Agent value=Human checked /></td></tr>
+      <tr><td align=right>Or robot?</td><td align=left style="padding-left: 10px;">{{AgentMoji "Robot"}}<input type=radio name=Agent value=Robot /></td></tr>
+      <tr><td align=center colspan=2>↓<b>Name and Email will only be visible to STEP staff</b>↓<br/>
+          以下のNameとEmailはSTEPスタフのみに表示されます</td></tr>
+      <tr><td align=right>Name</td><td><input type=text name="Name"/></td></tr>
+      <tr><td align=right>Email</td><td><input type=text name="Email" value="{{with .User}}{{.Email}}{{end}}"/></td></tr>
+    </table>
+    <input type=submit value="Record!">
+  </form>
+  {{else}}
+  Game Over!
+  {{end}}</p>
+  {{end}}
+
+  <td width=50% align=center>
+    {{if .Game.Moves}}
+    <table>
+      <tr><td><b>Score</b></td><td>{{ScoreGame .Game}}</td></tr>
+      <tr><td colspan=2 style="background: black"></td></tr>
+      <tr><td colspan=2><i>Word History:</i></td></tr>
+      {{range .Game.Moves}}
+      <tr><td>{{Move (Denorm .)}}</td><td>{{Score .}}</td></tr>
+      {{end}}
+    </table>
+    {{end}}
+</td></table>

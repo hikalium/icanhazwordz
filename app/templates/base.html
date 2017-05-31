@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>I can haz wordz{{if .Title}} : {{.Title}}{{end}}</title>
+    <link rel="icon" href="/favicon.ico" type="image/png" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web:300" rel="stylesheet">
+    <link rel=stylesheet href="/pure/pure-min.css" />
+    <link rel=stylesheet href="/pure/tables.css" />
+    <link rel=stylesheet href="/css/normal.css" />
+  </head>
+  <body>
+    {{template "user.html" .}}
+    {{range .Errors}}
+    <p class=error>{{.}}</p>
+    {{end}}
+    {{exec .Template .}}
+    <hr/>
+    <table width=100%>
+      <tr><td align=left><a href="/">Start a new game</a></td><td align=right><a href="/highscores">High Scores</a></tr>
+      <tr><td align=left><a href="/help">Help</a></td></tr>
+    </table>
+  </body>
+</html>

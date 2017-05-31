@@ -1,0 +1,8 @@
+*~
+\#*\#
+*.pyc
+.\#*
+src/*golang.org/
+src/github.com/
+pkg/
+bin/

@@ -1,0 +1,4 @@
+<div style="position: absolute; top: 15px; right: 15px;">
+  {{if .User}}Logged in as {{.User.Email}} (<a href="{{.LogoutURL}}">Logout</a>){{else}}
+  {{with .LoginURL}}<a href="{{.}}">Login</a>{{end}}{{end}}
+</div>

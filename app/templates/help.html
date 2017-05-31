@@ -1,0 +1,58 @@
+<h1><a name=goal />Goal</h1>
+Use the 16 letters in the grid provided to make long words!
+<h2><a name=rules />Rules</h2>
+
+In a single game you'll get 10 rounds, each with a chance to make a
+new word. If you can't make a word with a given set of letters, you
+can click "PASS" to get a whole new set of letters (but you'll get
+zero points for that round).
+
+<h3><a name=dictionary />Dictionary</h3>
+
+Most dictionaries should be fine. Most Unix-ish systems have a
+dictionary in /usr/share/dict/words . I'm using a lightly filtered
+version of the
+Debian <a href="https://packages.debian.org/jessie/wamerican">American
+English</a> dictionary. You can download <a href="dictionary.words">my
+dictionary here</a>.
+
+<h2><a name=tips />Tips</h2>
+
+Some letters are worth more points than others. The rarer letters
+(like Q, X, and Z) are worth more.
+
+<table class="pure-table pure-table-bordered">
+  <thead><th>1 points</th><th>2 points</th><th>3 point</th></thead>
+  <tbody>
+    <td valign=top>{{range .PointLetters.p1}}
+      {{block "letter" .}}<div class="letter p{{Points .}}">{{Denorm .}}</div>{{end}}
+      {{end}}
+    </td>
+    <td valign=top>{{range .PointLetters.p2}}{{template "letter" .}}{{end}}</td>
+    <td valign=top>{{range .PointLetters.p3}}{{template "letter" .}}{{end}}</td>
+  </tbody>
+</table>
+
+<i>Note:</i> The score for a given word is the <i>square</i> of the
+sum of its letter points plus a bonus point for not passing! For
+example, the word CAT is worth 4 letter points, but is scored as 5
+points squared:
+<table class="pure-table pure-table-bordered">
+  <thead><th>Letter</th><th>Points</th></thead>
+  <tbody>
+    <tr><td align=center>{{template "letter" "C"}}</td><td align=center>2</td></tr>
+    <tr><td align=center>{{template "letter" "A"}}</td><td align=center>1</td></tr>
+    <tr><td align=center>{{template "letter" "T"}}</td><td align=center>1</td></tr>
+    <tr><td align=center><i>bonus</i></td><td align=center>1</td></tr>
+  </tbody>
+</table>
+Thus CAT is worth (2 + 1 + 1 + 1)<sup>2</sup> = 5<sup>2</sup> = 25 points.
+
+<h1><a name=faq />FAQ</h1>
+<h2><a name="name"/>Why the name "I can haz wordz"?</h2>
+Cats are notoriously bad at spelling: <a href="https://www.google.co.jp/search?q=i+can+haz+cheezburger&source=lnms&tbm=isch&sa=X&biw=1742&bih=854&safe=active">I can haz cheezburger</a>.
+
+<h2><a name="q"/>Why is Qu stuck together rather than just a Q</h2> There's no
+words in <a href="/dictionary.words">my dictionary</a> that have a Q
+that isn't immediately followed by a U. You can enter either Q or QU
+in the webpage form and they'll be treated equivalently.

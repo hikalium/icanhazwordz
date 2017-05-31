@@ -1,0 +1,25 @@
+runtime: go
+api_version: go1
+
+handlers:
+- url: /favicon.ico
+  static_files: ico/book.png
+  mime_type: image/png
+  upload: ico/book.png
+
+- url: /dictionary.words
+  static_files: static/filtered.words
+  mime_type: text/plain
+  upload: static/filtered.words
+
+- url: /css
+  static_dir: css
+  mime_type: text/css
+
+- url: /pure
+  static_dir: pure
+  mime_type: text/css
+
+- url: /.*
+  script: _go_app
+  secure: always

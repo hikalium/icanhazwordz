@@ -1,0 +1,39 @@
+{{define "Name"}}
+  {{if .NickName}}{{.NickName}}{{else}}<i>anonymous</i>{{end}}
+{{end}}
+{{define "LinkedName"}}
+  {{if .URL}}<a href="{{.URL}}">{{template "Name" .}}</a>
+  {{else}}{{template "Name" .}}{{end}}
+{{end}}
+<style>
+  th, .scores {
+  text-align: center;
+  }
+</style>
+<p>High scores:</p>
+{{with $page := .}}
+<table class="pure-table pure-table-bordered">
+  <thead>
+    <tr><th>Nickname</th><th>Score</th><th>Agent</th><th>Time</th><th>Duration</th>
+    {{if $page.Admin}}
+    <th>Name</th><th>Email</th>
+    {{end}}
+    </tr>
+  </thead>
+  <tbody>
+    {{range .HighScores}}
+    <tr>
+      <td class=scores>{{template "LinkedName" .}}</td>
+      <td class=scores>{{.Score}}</td>
+      <td class=scores>{{AgentMoji .Agent}}</td>
+      <td class=scores>{{FTime .Time}}</td>
+      <td class=scores>{{HumanDur .Duration}}</td>
+      {{if $page.Admin}}
+      <td class=scores>{{.Name}}</td>
+      <td class=scores>{{.Email}}</td>
+      {{end}}
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}
